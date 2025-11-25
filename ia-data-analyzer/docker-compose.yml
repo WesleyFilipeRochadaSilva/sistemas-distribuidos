@@ -1,0 +1,48 @@
+version: '3.8'
+
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - orchestrator
+    networks:
+      - ia_network
+
+  orchestrator:
+    build: ./mcp_server
+    ports:
+      - "8000:8000"
+    depends_on:
+      - spreadsheet_agent
+      - image_agent
+    networks:
+      - ia_network
+    volumes:
+      - shared_data:/app/shared
+
+  spreadsheet_agent:
+    build: ./agents/spreadsheet_agent
+    ports:
+      - "8001:8001"
+    networks:
+      - ia_network
+    volumes:
+      - shared_data:/app/shared
+
+  image_agent:
+    build: ./agents/image_agent
+    ports:
+      - "8002:8002"
+    networks:
+      - ia_network
+    volumes:
+      - shared_data:/app/shared
+
+networks:
+  ia_network:
+    driver: bridge
+
+volumes:
+  shared_data:
