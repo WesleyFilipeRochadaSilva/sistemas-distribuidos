@@ -35,7 +35,7 @@ Usuário → [Frontend] → [MCP Orchestrator] → [Agente Específico] → [Res
 ### Executar o Sistema
 ```bash
 # Clone o repositório
-git clone <url-do-repositorio>
+git clone https://github.com/franfernandex/sistemas-distribuidos.git
 cd ia-data-analyzer
 
 # Execute com Docker Compose
