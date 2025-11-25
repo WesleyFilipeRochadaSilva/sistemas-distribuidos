@@ -1,0 +1,25 @@
+mcp:
+  version: "1.0"
+  name: "Data Analyzer Orchestrator"
+  description: "Orchestrates AI agents for data analysis"
+  
+agents:
+  spreadsheet_agent:
+    endpoint: "http://spreadsheet_agent:8001"
+    capabilities: ["outlier_detection", "data_cleaning"]
+    input_types: [".csv", ".xlsx"]
+    
+  image_agent:
+    endpoint: "http://image_agent:8002" 
+    capabilities: ["ocr_extraction", "image_analysis"]
+    input_types: [".jpg", ".png", ".jpeg"]
+
+routing:
+  rules:
+    - condition: "file_extension in ['.csv', '.xlsx']"
+      target_agent: "spreadsheet_agent"
+      action: "detect_outliers"
+
+    - condition: "file_extension in ['.jpg', '.png', '.jpeg']"
+      target_agent: "image_agent"
+      action: "extract_data_from_image"
